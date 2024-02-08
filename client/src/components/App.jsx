@@ -21,16 +21,27 @@ const App = (props) => {
       }
       return movie;
     });
-    setWatchedList(updatedList.filter(movie => movie.watched));
-    setToWatchList(updatedList.filter(movie => !movie.watched));
+    // setWatchedList(updatedList.filter(movie => movie.watched));
+    // setToWatchList(updatedList.filter(movie => !movie.watched));
     setMovieList(updatedList);
+    setFilteredList(updatedList.filter(movie => (watchedFilter ? movie.watched : !movie.watched)));
   };
 
-  // const handleToWatchToggle = () => {
-  //   setWatchedFilter(false);
-  //   const toWatchMovies = movieList.filter(movie => !movie.watched);
-  //   setToWatchList(toWatchMovies);
-  // };
+  const handleToWatchClick = () => {
+    // render only movies with watched: false as key/value pair
+    setWatchedFilter(false);
+    setFilteredList(movieList.filter(movie => !movie.watched));
+    // setWatchedList([]);
+    //setToWatchList(moviesList.filter(movie => !movie.watched));
+  };
+
+  const handleWatchClick = () => {
+    // render only movies with watched: true as key/value pair
+    setWatchedFilter(true);
+    setFilteredList(movieList.filter(movie => movie.watched));
+    // setToWatchList([]);
+    //setWatchedList(moviesList.filter(movie => movie.watched));
+  };
 
   const handleAddClick = (query) => {
     // create function to add movie to list
@@ -39,8 +50,9 @@ const App = (props) => {
 
     // Use setMovieList on value we set the added movie to
     setMovieList(list);
-    setWatchedList(list);
-    setToWatchList(list);
+    setFilteredList(list);
+    // setWatchedList(list);
+    // setToWatchList(list);
   };
 
   const handleSearchClick = (query) => {
@@ -53,7 +65,7 @@ const App = (props) => {
       }
       setFilteredList(filteredMovies);
     } else {
-      setFilteredList([]);
+      setFilteredList(movieList);
     }
   };
 
@@ -64,10 +76,10 @@ const App = (props) => {
         <AddMovie onAddClick={handleAddClick}/>
       </div>
       <div className="navbar">
-        <Search onSearchClick={handleSearchClick} />
+        <Search onSearchClick={handleSearchClick} onToWatchClick={handleToWatchClick} onWatchedClick={handleWatchClick}/>
       </div>
       <div className="list">
-        <MovieList movies={movieList} filtered={filteredList} watchedMovies={watchedList} toWatchMovies={toWatchList }onWatchedToggle={handleWatchedToggle}/>
+        <MovieList movies={movieList} filtered={filteredList} onWatchedToggle={handleWatchedToggle}/>
       </div>
     </div>
   )
