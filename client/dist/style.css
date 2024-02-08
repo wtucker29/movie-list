@@ -6,6 +6,21 @@ body {
 .movie-list-entry-title {
   display: inline;
 }
-.watched-btn {
+.movie-list-entry-btn {
   display: inline;
+}
+.active {
+  background-color: green;
+}
+.btn-watched.active {
+  background-color: green;
+}
+.btn-to-watch.active {
+  background-color: green;
+}
+.btn-watched:not(.active) {
+  background-color: grey;
+}
+.btn-to-watch:not(.active) {
+  background-color: grey;
 }
