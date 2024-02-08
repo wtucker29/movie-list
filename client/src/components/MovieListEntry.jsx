@@ -10,7 +10,7 @@ var MovieListEntry = ({movie, onWatchedToggle}) => {
   return (
     <div className="movie-list-entry">
       <span className="movie-list-entry-title">{movie.title}</span>
-      <button className="watched-btn" onClick={handleWatchedToggle}>{movie.watched ? 'Watched' : 'Not Watched'}</button>
+      <button className="movie-list-entry-btn" onClick={handleWatchedToggle}>{movie.watched ? 'Watched' : 'Not Watched'}</button>
     </div>
   );
 }
