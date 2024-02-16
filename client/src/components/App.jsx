@@ -10,8 +10,6 @@ const App = (props) => {
   const [movieList, setMovieList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [watchedFilter, setWatchedFilter] = useState(false);
-  const [watchedList, setWatchedList] = useState([]);
-  const [toWatchList, setToWatchList] = useState([]);
 
   const handleWatchedToggle = (title) => {
     // Toggle if movie watched when clicked
@@ -21,8 +19,6 @@ const App = (props) => {
       }
       return movie;
     });
-    // setWatchedList(updatedList.filter(movie => movie.watched));
-    // setToWatchList(updatedList.filter(movie => !movie.watched));
     setMovieList(updatedList);
     setFilteredList(updatedList.filter(movie => (watchedFilter ? movie.watched : !movie.watched)));
   };
@@ -31,16 +27,12 @@ const App = (props) => {
     // render only movies with watched: false as key/value pair
     setWatchedFilter(false);
     setFilteredList(movieList.filter(movie => !movie.watched));
-    // setWatchedList([]);
-    //setToWatchList(moviesList.filter(movie => !movie.watched));
   };
 
   const handleWatchClick = () => {
     // render only movies with watched: true as key/value pair
     setWatchedFilter(true);
     setFilteredList(movieList.filter(movie => movie.watched));
-    // setToWatchList([]);
-    //setWatchedList(moviesList.filter(movie => movie.watched));
   };
 
   const handleAddClick = (query) => {
@@ -51,8 +43,6 @@ const App = (props) => {
     // Use setMovieList on value we set the added movie to
     setMovieList(list);
     setFilteredList(list);
-    // setWatchedList(list);
-    // setToWatchList(list);
   };
 
   const handleSearchClick = (query) => {
