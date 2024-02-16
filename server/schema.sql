@@ -5,7 +5,8 @@ USE movielist;
 CREATE TABLE movies (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(50) NOT NULL,
-  watched TINYINT
+  watched TINYINT,
+  PRIMARY KEY (id)
 )
 
 /*  Execute this file from the command line by typing:
