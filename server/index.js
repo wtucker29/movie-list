@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const db = require('./db');
 
 // Middleware
@@ -22,7 +23,11 @@ app.use(express.json());
 app.use('/lists', router);
 
 // Serve client files
-app.use(express.static('client/dist'));
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);

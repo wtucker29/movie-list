@@ -21,7 +21,20 @@ module.exports = {
         res.status(500).send('Error adding movie to list');
         return;
       }
-      res.status(201).send('Movie added to list successfully');
+      res.status(201).send(result);
+    });
+  },
+
+  put: function(req, res) {
+    // something
+    const { title, watched } = req.body;
+    const updatedMovie = { title, watched };
+    models.movielist.update(updatedMovie, (err, result) => {
+      if (err) {
+        res.status(500).send('Error updating watched status');
+        return;
+      }
+      res.status(201).send(result);
     });
   }
 };

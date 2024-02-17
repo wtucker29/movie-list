@@ -25,5 +25,26 @@ module.exports = {
       }
       callback(null, result);
     });
+  },
+
+  update: function(updatedMovie, callback) {
+    // something
+    const { title, watched } = updatedMovie;
+    const getMovieIdQuery = 'SELECT id FROM movies WHERE title = ?';
+    db.query(getMovieIdQuery, [title], (err, result) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      const movieId = result[0].id;
+      const updateMovieQuery = 'UPDATE movies SET watched = ? WHERE id = ?';
+      db.query(updateMovieQuery, [watched, movieId], (err, result) => {
+        if (err) {
+          callback(err, null);
+          return;
+        }
+        callback(null, result);
+      });
+    });
   }
 };
