@@ -29,10 +29,10 @@ var Search = ({ onSearchClick, onToWatchClick, onWatchedClick }) => {
 
   return (
   <div className="search-bar">
-    <button className={`btn-watched ${watchedActive ? 'active' : ''}`} onClick={handleWatchedClick}>
+    <button className={`button-3 btn-watched ${watchedActive ? 'active' : ''}`} onClick={handleWatchedClick}>
       <span>Watched</span>
     </button>
-    <button className={`btn-to-watch ${toWatchActive ? 'active' : ''}`} onClick={handleToWatchClick}>
+    <button className={`button-3 btn-to-watch ${toWatchActive ? 'active' : ''}`} onClick={handleToWatchClick}>
       <span>To Watch</span>
     </button>
     <input className="search-bar-form" type="text" onChange={handleInputChange}/>
