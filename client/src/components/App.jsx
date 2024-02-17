@@ -3,19 +3,42 @@ import MovieList from './MovieList.jsx';
 import MovieListEntry from './MovieListEntry.jsx';
 import Search from './Search.jsx';
 import AddMovie from './AddMovie.jsx';
-import exampleMovieData from './exampleMovieData.js';
-const { useState } = React;
+import axios from 'axios';
+const { useState, useEffect } = React;
 
 const App = (props) => {
   const [movieList, setMovieList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filteredList, setFilteredList] = useState([]);
   const [watchedFilter, setWatchedFilter] = useState(false);
+
+  useEffect(() => {
+    //something
+    axios.get('http://127.0.0.1:3000/lists/movielist')
+      .then((response) => {
+        setMovieList(response.data);
+        setIsLoading(false);
+        setFilteredList(response.data);
+      })
+      .catch((error) => {
+        console.error('Error grabbing movie list: ', error);
+      });
+  }, []);
 
   const handleWatchedToggle = (title) => {
     // Toggle if movie watched when clicked
     const updatedList = movieList.map(movie => {
       if (movie.title === title) {
-        return { ...movie, watched: !movie.watched};
+        const updatedMovie = { ...movie, watched: !movie.watched};
+        console.log('Movie from put request in app.jsx: ', updatedMovie);
+        axios.put('http://127.0.0.1:3000/lists/movielist', updatedMovie)
+          .then((response) => {
+            console.log('Movie updated successfully:', response.data);
+          })
+          .catch((error) => {
+            console.error('Error updating movie:', error);
+          });
+        return updatedMovie;
       }
       return movie;
     });
@@ -38,11 +61,17 @@ const App = (props) => {
   const handleAddClick = (query) => {
     // create function to add movie to list
     var addedMovie = {title: query, watched: false};
-    var list = [...movieList, addedMovie];
 
-    // Use setMovieList on value we set the added movie to
-    setMovieList(list);
-    setFilteredList(list);
+    axios.post('http://127.0.0.1:3000/lists/movielist', addedMovie)
+      .then((response) => {
+        console.log('Movie added successfully:', response.data);
+        var list = [...movieList, addedMovie];
+        setMovieList(list);
+        setFilteredList(list);
+      })
+      .catch((error) => {
+        console.error('Error adding movie:', error);
+      })
   };
 
   const handleSearchClick = (query) => {
@@ -61,7 +90,7 @@ const App = (props) => {
 
   return (
     <div>
-      <h1 className="page-title">Movie List</h1>
+      <h1 className="page-title">William's Movie List</h1>
       <div className="addbar">
         <AddMovie onAddClick={handleAddClick}/>
       </div>
